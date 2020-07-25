@@ -1,11 +1,27 @@
 import React from 'react';
-// import logo from './logo.svg';
 import List from './components/List/List';
+import Detail from './components/Detail/Detail';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'; // Redirect, 
+// import logo from './logo.svg';
 import './App.css';
 
 function App() {
     return (
-        <List />
+        <div className="App">
+            <Router>
+                <Switch>
+                    <Route path="/" 
+                        exact
+                        component={List} 
+                    />
+
+                    <Route path="/detail/:id" 
+                        exact
+                        component={Detail} 
+                    />
+                </Switch>
+            </Router>  
+        </div>
     );
 }
 

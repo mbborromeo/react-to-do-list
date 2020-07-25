@@ -7,7 +7,7 @@ const API_BASE = 'https://demo1-webservice.eventbase.com/v4/admin/events/fronten
 
 const API_KEY = 'cc1-0befd4410327ac7b8c7f88e4ed466e87d6f78eff29de81c3ee4e28d79b604eb2-0c75664d5c8211b4395e7f766a415a25827c7cf2';
 
-class ListService {
+class DataService {
     getList(){ // queryString="react"
         console.log("getList")
         // return axios.get( ... );
@@ -24,6 +24,20 @@ class ListService {
             }
         );        
     }
+
+    getDetail( idx ){ // queryString="react"
+        console.log("getDetail")
+        
+        return axios.jsonp(
+            API_BASE + `/${ idx }`,
+            {
+                timeout: 2000,
+                params: {
+                    api: API_KEY
+                }
+            }
+        );        
+    }
 }
 
-export default ListService;
+export default DataService;

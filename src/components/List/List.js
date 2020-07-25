@@ -1,26 +1,27 @@
 import React, { useState, useEffect, useMemo } from 'react';
-// import ListItem from '../ListItem/ListItem';
-import ListService from './ListService';
+import { Link } from 'react-router-dom';
+import DataService from '../../services/DataService';
 import '../../App.css';
 
 function List() {
-    const [data, setData] = useState( [{}] );
-    console.log('List data', data)
+    const [list, setList] = useState( [{}] );
+    console.log('List list', list)
 
     // save a memoized copy of the function for re-use instead of creating a new function each time
-    const listService = useMemo( 
-        () => new ListService(),
+    const dataService = useMemo( 
+        () => new DataService(),
         []
     );
 
     useEffect( () => 
     {
-        listService.getList()
+        console.log("List useEffect")
+
+        dataService.getList()
             .then( function (response) {
                 // handle success
                 console.log("axios.jsonp SUCCESS", response);
-                console.log("axios.jsonp SUCCESS data", response.data);
-                setData( response.data );
+                setList( response.data );
             })
             .catch( function (error) {
                 // handle error
@@ -31,19 +32,20 @@ function List() {
                 console.log("axios.jsonp FINALLY");
             });
     },
-    [ listService ]
+    [ dataService ]
     );
   
-    return (
-        <div className="App">
-            <ul>
-                {data.map(item => (
-                    <li key={item.id}>
-                        <a href="#" data-id={item.id} target="_blank">{item.name}</a>
-                    </li>
-                ))}
-            </ul>
-        </div>
+    return (        
+        <ul>
+            { list.map(item => (
+                <li key={item.id}>
+                    <Link to={'/detail/'+ item.id} data-id={item.id}>
+                        {item.name}
+                    </Link>
+                </li>
+              ))
+            }
+        </ul>
     );
 }
 
