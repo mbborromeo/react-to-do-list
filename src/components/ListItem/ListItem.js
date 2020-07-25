@@ -4,7 +4,7 @@ import '../../App.css';
 function ListItem(props) {    
     return (
         <li>
-            <a href={props.listData.url}>{props.listData.title}</a>
+            <a href="#" data-id={props.listData.id} target="_blank">{props.listData.name}</a>
         </li>
     );
 }
