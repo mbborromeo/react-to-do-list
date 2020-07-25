@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ListItem from '../ListItem/ListItem';
-import ListService from '../../ListService';
+import ListService from './ListService';
 import '../../App.css';
 
 function List() {
