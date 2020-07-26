@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
 import '../../App.css';
@@ -15,9 +15,18 @@ function Detail(props) {
         []
     );
 
-    const getID = () => {
-        return props.match.params.id;
-    }
+    // when you wrap a useCallback() hook around a function, the function inside it doesn't re-render 
+    /*
+        const getID = () => {
+            return props.match.params.id;
+        }
+    */
+    const getID = useCallback(
+        () => {
+            return props.match.params.id;
+        },
+        [ props.match.params.id ] // dependencies that require a re-render for
+    );
 
     useEffect( () => 
     {
@@ -28,25 +37,24 @@ function Detail(props) {
             dataService.getDetail( detailID )
                 .then( function (response) {
                     // handle success
-                    console.log("axios.jsonp SUCCESS", response);
-                    setDetail( response ); // .data
-                    setLoaded( true );
+                    setDetail( response );                    
                 })
                 .catch( function (error) {
                     // handle error
-                    console.log("axios.jsonp CATCH", error);
+                    console.error("axios.jsonp CATCH", error);
                 })
                 .finally( function () {
                     // always executed
-                    console.log("axios.jsonp FINALLY");
+                    setLoaded( true );
                 });
         }
             
     },
-    [ dataService, detailID ]
+    [ dataService, detailID, getID ]
     );
 
-    if( loaded ){
+    if( loaded && Object.keys(detail).length > 0 ){
+        console.log("details exist")
         return (
             <div>
                 <span>
@@ -62,6 +70,8 @@ function Detail(props) {
                 </Link>
             </div>
         );
+    } else if( loaded && Object.keys(detail).length === 0 ){
+        return <div>No detail to display</div>;
     } else {
         return <div>Loading Detail</div>;
     }
