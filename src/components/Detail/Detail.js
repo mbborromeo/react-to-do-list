@@ -6,6 +6,7 @@ import '../../App.css';
 function Detail(props) {
     const [detailID, setDetailID] = useState( undefined );
     const [detail, setDetail] = useState( {} );
+    const [loaded, setLoaded] = useState(false)
     console.log('Detail detail', detail)
 
     // save a memoized copy of the function for re-use instead of creating a new function each time
@@ -28,7 +29,8 @@ function Detail(props) {
                 .then( function (response) {
                     // handle success
                     console.log("axios.jsonp SUCCESS", response);
-                    setDetail( response.data );
+                    setDetail( response ); // .data
+                    setLoaded( true );
                 })
                 .catch( function (error) {
                     // handle error
@@ -44,21 +46,25 @@ function Detail(props) {
     [ dataService, detailID ]
     );
 
-    return (
-        <div>
-            <span>
-                Detail { detailID } is { detail.name }
-            </span>
+    if( loaded ){
+        return (
+            <div>
+                <span>
+                    Detail { detailID } for { detail.title } is { detail.completed }
+                </span>
 
-            <br /><br />
-            <Link 
-                to={'/'}
-                className='button back'
-            >
-                &lt; Back 
-            </Link>
-        </div>
-    );
+                <br /><br />
+                <Link 
+                    to={'/'}
+                    className='button back'
+                >
+                    &lt; Back 
+                </Link>
+            </div>
+        );
+    } else {
+        return <div>Loading Detail</div>;
+    }
 }
 
 export default Detail;
