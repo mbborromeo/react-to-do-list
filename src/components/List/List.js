@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
-import '../../App.css';
+import './List.css';
 
 function List() {
     const [list, setList] = useState( [] );
@@ -42,7 +42,7 @@ function List() {
                     list.map( item => (
                         <li key={item.id}>
                             <Link to={'/detail/'+ item.id} data-id={item.id}>
-                                {item.title}
+                                {item.id}. {item.title}
                             </Link>
                         </li>
                     ))
