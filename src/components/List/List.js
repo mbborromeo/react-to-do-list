@@ -37,17 +37,37 @@ function List() {
       
     if( loaded && list.length > 0 ){
         return (
-            <ul>
-                { 
-                    list.map( item => (
-                        <li key={item.id}>
-                            <Link to={'/detail/'+ item.id} data-id={item.id}>
-                                {item.id}. {item.title}
-                            </Link>
-                        </li>
-                    ))
-                }
-            </ul> 
+            <div>
+                <h1>To Do</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    { 
+                        list.map( item => (
+                            <tr key={item.id}>
+                                <td>
+                                    {item.id}
+                                </td>
+                                <td>
+                                    <Link to={'/detail/'+ item.id} data-id={item.id}>
+                                        {item.title}
+                                    </Link>
+                                </td>
+                                <td>
+                                    { item.completed.toString() }
+                                </td>
+                            </tr>
+                        ))
+                    }
+                    </tbody>
+                </table> 
+            </div>
         );
     } else if( loaded && list.length === 0 ){
         return <div>No results to display</div>;
