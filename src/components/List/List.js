@@ -18,7 +18,12 @@ function List() {
     const completeToDo = (index) => { 
         console.log('completeToDo index', index)
         const copyOfList = [...list];
-        copyOfList[index].completed = true;
+        if( !copyOfList[index].completed ){
+            copyOfList[index].completed = true;
+        } else {
+            copyOfList[index].completed = false;
+        }
+        
         setList(copyOfList);
     };
 
@@ -133,7 +138,7 @@ function List() {
                                     </Link>
                                 </td>
                                 <td>
-                                    <button onClick={ () => completeToDo(i) }>Complete</button>
+                                    <button onClick={ () => completeToDo(i) }>{ item.completed ? 'Mark as To Do' : 'Mark as Done' }</button>
                                     <button onClick={ () => deleteToDo(i) }>Delete</button>
                                 </td>
                             </tr>
