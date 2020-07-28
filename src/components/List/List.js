@@ -15,6 +15,7 @@ function List() {
         []
     );
 
+    // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
     const completeToDo = (index) => { 
         console.log('completeToDo index', index)
         const copyOfList = [...list];
@@ -41,7 +42,7 @@ function List() {
     };
     */
 
-    /* Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript */
+    // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
     const getMaxID = () => {
         const ids = list.map( item => item.id );
         const sorted = ids.sort( (a, b) => a-b ); // sort ascending order
@@ -114,7 +115,7 @@ function List() {
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
-                            <th>Actions</th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
