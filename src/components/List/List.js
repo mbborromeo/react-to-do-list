@@ -6,6 +6,7 @@ import './List.css';
 function List() {
     const [list, setList] = useState( [] );
     const [loaded, setLoaded] = useState(false);
+    const [newItem, setNewItem] = useState('');
     console.log('List list', list)
 
     // save a memoized copy of the function for re-use instead of creating a new function each time
@@ -25,6 +26,43 @@ function List() {
         const copyOfList = [...list];
         copyOfList.splice(index, 1);
         setList(copyOfList);
+    };
+
+    /*
+    const editToDo = (index, text) => {
+        const copyOfList = [...list];
+        copyOfList[index].title = text;
+        setList(copyOfList);
+    };
+    */
+
+    /* Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript */
+    const getMaxID = () => {
+        const ids = list.map( item => item.id );
+        const sorted = ids.sort( (a, b) => a-b ); // sort ascending order
+        return sorted[ sorted.length - 1 ];
+    };
+
+    const addToDo = (text) => {
+        const newListItem = {
+            userId: 99, // default user
+            id: getMaxID() + 1, // max ID + 1
+            completed: false,
+            title: text
+        };
+        const newList = [...list, newListItem];
+        setList(newList);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if(!newItem){
+          return; //exit if field empty
+        }
+
+        addToDo(newItem);
+        setNewItem(''); // reset field to empty
     };
 
     useEffect( () => 
@@ -51,8 +89,22 @@ function List() {
     if( loaded && list.length > 0 ){
         return (
             <div>
-                <table>
-                    <caption>TO DO</caption>
+                <h1>TO DO</h1>
+
+                <form>
+                    <input 
+                      type="text"
+                      value={newItem} 
+                      onChange={e => setNewItem(e.target.value)}
+                    />
+                    <input 
+                      type="submit" 
+                      value="Add" 
+                      onClick={ handleSubmit } 
+                    />
+                </form>
+
+                <table>                    
                     <thead>
                         <tr>
                             <th>ID</th>
