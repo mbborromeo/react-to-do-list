@@ -5,7 +5,8 @@ import './List.css';
 
 function List() {
     const [list, setList] = useState( [] );
-    const [sortedField, setSortedField] = useState('null');
+    //const [sortedField, setSortedField] = useState('null');
+    const [sortConfig, setSortConfig] = useState( {key: null, direction: 'ascending'} );
     const [loaded, setLoaded] = useState(false);
     const [newItem, setNewItem] = useState('');
     console.log('List list', list)
@@ -42,6 +43,15 @@ function List() {
         setList(copyOfList);
     };
     */
+
+    // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
+    const requestSort = (key) => {
+        let direction = 'ascending'; // by default
+        if( sortConfig.key===key && sortConfig.direction==='ascending' ){
+            direction = 'descending';
+        }
+        setSortConfig( {key, direction} );
+    };
 
     // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
     const getMaxID = () => {
@@ -96,13 +106,13 @@ function List() {
     if( loaded && list.length > 0 ){      
         let sortedList = [...list];
 
-        if( sortedField !== null ){  
+        if( sortConfig.key !== null ){  
             sortedList.sort( (a, b) => {
-                if( a[sortedField] < b[sortedField] ){
-                    return -1;
+                if( a[sortConfig.key] < b[sortConfig.key] ){
+                    return sortConfig.direction === 'ascending' ? -1 : 1;
                 }
-                if( a[sortedField] > b[sortedField] ){
-                    return 1;
+                if( a[sortConfig.key] > b[sortConfig.key] ){
+                    return sortConfig.direction === 'ascending' ? 1 : -1;
                 }
                 return 0;
             });
@@ -129,12 +139,12 @@ function List() {
                     <thead>
                         <tr>
                             <td>
-                                <button type="button" onClick={ () => setSortedField('id') }>
+                                <button type="button" onClick={ () => requestSort('id') }>
                                     ID
                                 </button>
                             </td>
                             <td>
-                                <button type="button" onClick={ () => setSortedField('title') }>
+                                <button type="button" onClick={ () => requestSort('title') }>
                                     Title
                                 </button>
                             </td>
