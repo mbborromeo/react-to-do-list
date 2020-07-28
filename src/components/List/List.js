@@ -14,6 +14,19 @@ function List() {
         []
     );
 
+    const completeToDo = (index) => { 
+        console.log('completeToDo index', index)
+        const copyOfList = [...list];
+        copyOfList[index].completed = true;
+        setList(copyOfList);
+    };
+
+    const deleteToDo = (index) => {
+        const copyOfList = [...list];
+        copyOfList.splice(index, 1);
+        setList(copyOfList);
+    };
+
     useEffect( () => 
     {
         console.log("List useEffect")
@@ -38,29 +51,38 @@ function List() {
     if( loaded && list.length > 0 ){
         return (
             <div>
-                <h1>To Do</h1>
                 <table>
+                    <caption>TO DO</caption>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
-                            <th>Completed</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     { 
-                        list.map( item => (
+                        list.map( (item, i) => (
                             <tr key={item.id}>
                                 <td>
-                                    {item.id}
+                                    <Link to={'/detail/'+ item.id} 
+                                      data-id={item.id} 
+                                      className={ item.completed ? 'completed' : '' }
+                                    >
+                                        {item.id}
+                                    </Link>
                                 </td>
                                 <td>
-                                    <Link to={'/detail/'+ item.id} data-id={item.id}>
+                                    <Link to={'/detail/'+ item.id} 
+                                      data-id={item.id} 
+                                      className={ item.completed ? 'completed' : '' }
+                                    >
                                         {item.title}
                                     </Link>
                                 </td>
                                 <td>
-                                    { item.completed.toString() }
+                                    <button onClick={ () => completeToDo(i) }>Complete</button>
+                                    <button onClick={ () => deleteToDo(i) }>Delete</button>
                                 </td>
                             </tr>
                         ))
