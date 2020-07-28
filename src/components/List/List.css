@@ -8,8 +8,21 @@ table tbody tr td a {
 }
 
 table tbody tr td a:hover {
-    font-weight: bold;
+    color: green;
 }
+
+table thead tr td button {
+    background-color: none;
+    border: none;
+    text-align: left;
+    text-decoration: underline;
+    margin: 0;
+    padding: 0;
+}
+
+table thead tr td button:hover {
+    text-decoration: none;
+} 
 
 .completed {
     text-decoration: line-through;

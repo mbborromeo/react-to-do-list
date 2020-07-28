@@ -5,6 +5,7 @@ import './List.css';
 
 function List() {
     const [list, setList] = useState( [] );
+    const [sortedField, setSortedField] = useState('null');
     const [loaded, setLoaded] = useState(false);
     const [newItem, setNewItem] = useState('');
     console.log('List list', list)
@@ -52,7 +53,7 @@ function List() {
     const addToDo = (text) => {
         const newListItem = {
             userId: 99, // default user
-            id: getMaxID() + 1, // max ID + 1
+            id: getMaxID() + 1,
             completed: false,
             title: text
         };
@@ -78,7 +79,7 @@ function List() {
         dataService.getList()
             .then( function (response) {
                 // handle success
-                setList( response );                
+                setList( response );
             })
             .catch( function (error) {
                 // handle error
@@ -92,7 +93,21 @@ function List() {
     [ dataService ]
     );
       
-    if( loaded && list.length > 0 ){
+    if( loaded && list.length > 0 ){      
+        let sortedList = [...list];
+
+        if( sortedField !== null ){  
+            sortedList.sort( (a, b) => {
+                if( a[sortedField] < b[sortedField] ){
+                    return -1;
+                }
+                if( a[sortedField] > b[sortedField] ){
+                    return 1;
+                }
+                return 0;
+            });
+        }
+      
         return (
             <div>
                 <h1>TO DO</h1>
@@ -113,14 +128,22 @@ function List() {
                 <table>                    
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>&nbsp;</th>
+                            <td>
+                                <button type="button" onClick={ () => setSortedField('id') }>
+                                    ID
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" onClick={ () => setSortedField('title') }>
+                                    Title
+                                </button>
+                            </td>
+                            <td>&nbsp;</td>
                         </tr>
                     </thead>
                     <tbody>
                     { 
-                        list.map( (item, i) => (
+                        sortedList.map( (item, i) => (
                             <tr key={item.id}>
                                 <td>
                                     <Link to={'/detail/'+ item.id} 
