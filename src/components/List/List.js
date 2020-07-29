@@ -160,7 +160,15 @@ function List() {
                                     Title
                                 </button>
                             </td>
-                            <td>&nbsp;</td>
+                            <td>
+                                <button 
+                                  type="button" 
+                                  className={ sortConfig.key==='completed' ? sortConfig.direction : '' }
+                                  onClick={ () => requestSort('completed') }
+                                >
+                                    Completed
+                                </button>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,7 +193,7 @@ function List() {
                                 </td>
                                 <td>
                                     <button onClick={ () => completeToDo(i) }>
-                                        { item.completed ? 'Undo' : 'Done' }
+                                        { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
                                     </button>
                                     <button onClick={ () => deleteToDo(i) }>X</button>
                                 </td>
