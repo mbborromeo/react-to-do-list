@@ -103,11 +103,9 @@ function List() {
     [ dataService ]
     );
       
-    if( loaded && list.length > 0 ){      
-        let sortedList = [...list];
-
+    if( loaded && list.length > 0 ){
         if( sortConfig.key !== null ){  
-            sortedList.sort( (a, b) => {
+            list.sort( (a, b) => {
                 if( a[sortConfig.key] < b[sortConfig.key] ){
                     return sortConfig.direction === 'ascending' ? -1 : 1;
                 }
@@ -153,7 +151,7 @@ function List() {
                     </thead>
                     <tbody>
                     { 
-                        sortedList.map( (item, i) => (
+                        list.map( (item, i) => (
                             <tr key={item.id}>
                                 <td>
                                     <Link to={'/detail/'+ item.id} 
