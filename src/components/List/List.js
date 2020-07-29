@@ -46,11 +46,16 @@ function List() {
 
     // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
     const requestSort = (key) => {
-        let direction = 'ascending'; // by default
+        let direction;
+        
+        // if requested key is same as current key
         if( sortConfig.key===key && sortConfig.direction==='ascending' ){
             direction = 'descending';
+        } else {
+            direction = 'ascending'; // by default
         }
-        // set to new key
+
+        // set to new key and direction
         setSortConfig( {key, direction} );
     };
 
