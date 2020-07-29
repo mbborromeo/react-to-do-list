@@ -15,14 +15,25 @@ table thead tr td button {
     background-color: none;
     border: none;
     text-align: left;
-    text-decoration: underline;
-    margin: 0;
-    padding: 0;
+    text-decoration: none;
+    padding: 0.5em;
+    margin-bottom: 1px;
+    min-width: 60px;
 }
 
 table thead tr td button:hover {
-    text-decoration: none;
+    background-color: #CCC;
 } 
+
+thead button.ascending::after {
+    content: '\2193';
+    margin-left: 1em;
+}
+
+thead button.descending::after {
+    content: '\2191';
+    margin-left: 1em;
+}
 
 .completed {
     text-decoration: line-through;

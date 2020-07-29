@@ -66,3 +66,14 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+### TO DO
+
+- add up/down arrows to ID and Title buttons to indicate order can be toggled
+- improve code performance & reduce re-rendering
+- Unit Testing
+- Edit/update functionality
+- lint checking
+- feedback message of when an item has been added
+- CSS style, so add field is pinned to top

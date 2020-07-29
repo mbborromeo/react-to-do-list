@@ -47,7 +47,7 @@ function List() {
     // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
     const requestSort = (key) => {
         let direction;
-        
+
         // if requested key is same as current key
         if( sortConfig.key===key && sortConfig.direction==='ascending' ){
             direction = 'descending';
@@ -143,12 +143,20 @@ function List() {
                     <thead>
                         <tr>
                             <td>
-                                <button type="button" onClick={ () => requestSort('id') }>
+                                <button 
+                                  type="button" 
+                                  className={ sortConfig.key==='id' ? sortConfig.direction : '' }
+                                  onClick={ () => requestSort('id') }
+                                >
                                     ID
                                 </button>
                             </td>
                             <td>
-                                <button type="button" onClick={ () => requestSort('title') }>
+                                <button 
+                                  type="button" 
+                                  className={ sortConfig.key==='title' ? sortConfig.direction : '' }
+                                  onClick={ () => requestSort('title') }
+                                >
                                     Title
                                 </button>
                             </td>
@@ -176,7 +184,9 @@ function List() {
                                     </Link>
                                 </td>
                                 <td>
-                                    <button onClick={ () => completeToDo(i) }>{ item.completed ? 'Mark as To Do' : 'Mark as Done' }</button>
+                                    <button onClick={ () => completeToDo(i) }>
+                                        { item.completed ? 'Undo' : 'Done' }
+                                    </button>
                                     <button onClick={ () => deleteToDo(i) }>Delete</button>
                                 </td>
                             </tr>
