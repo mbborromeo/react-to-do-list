@@ -6,7 +6,7 @@ import './List.css';
 function List() {
     const [list, setList] = useState( [] );
     //const [sortedField, setSortedField] = useState('null');
-    const [sortConfig, setSortConfig] = useState( {key: null, direction: 'ascending'} );
+    const [sortConfig, setSortConfig] = useState( {key: 'id', direction: 'ascending'} );
     const [loaded, setLoaded] = useState(false);
     const [newItem, setNewItem] = useState('');
     console.log('List list', list)
@@ -50,6 +50,7 @@ function List() {
         if( sortConfig.key===key && sortConfig.direction==='ascending' ){
             direction = 'descending';
         }
+        // set to new key
         setSortConfig( {key, direction} );
     };
 
