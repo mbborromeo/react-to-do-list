@@ -26,12 +26,12 @@ table thead tr td button:hover {
 } 
 
 thead button.ascending::after {
-    content: '\2193';
+    content: '\2191';
     margin-left: 1em;
 }
 
 thead button.descending::after {
-    content: '\2191';
+    content: '\2193';
     margin-left: 1em;
 }
 

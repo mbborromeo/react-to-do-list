@@ -187,7 +187,7 @@ function List() {
                                     <button onClick={ () => completeToDo(i) }>
                                         { item.completed ? 'Undo' : 'Done' }
                                     </button>
-                                    <button onClick={ () => deleteToDo(i) }>Delete</button>
+                                    <button onClick={ () => deleteToDo(i) }>X</button>
                                 </td>
                             </tr>
                         ))

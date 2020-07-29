@@ -70,7 +70,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### TO DO
 
-- add up/down arrows to ID and Title buttons to indicate order can be toggled
 - improve code performance & reduce re-rendering
 - Unit Testing
 - Edit/update functionality
