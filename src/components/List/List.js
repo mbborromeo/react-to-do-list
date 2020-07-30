@@ -110,16 +110,29 @@ function List() {
     );
       
     if( loaded && list.length > 0 ){
-        if( sortConfig.key !== null ){
+        console.log('sort by sortConfig.key', sortConfig.key)
+        console.log('sortConfig.direction', sortConfig.direction)
+
+        if( sortConfig.key !== null ){          
             list.sort( (a, b) => {
                 if( a[sortConfig.key] < b[sortConfig.key] ){
-                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                    if( sortConfig.key === 'completed' ){
+                        return sortConfig.direction === 'ascending' ? 1 : -1;
+                    } else {
+                        return sortConfig.direction === 'ascending' ? -1 : 1;
+                    }
                 }
                 if( a[sortConfig.key] > b[sortConfig.key] ){
-                    return sortConfig.direction === 'ascending' ? 1 : -1;
+                    if( sortConfig.key === 'completed' ){
+                        return sortConfig.direction === 'ascending' ? -1 : 1;
+                    } else {
+                        return sortConfig.direction === 'ascending' ? 1 : -1;
+                    }                    
                 }
                 return 0;
             });
+
+            console.log('list sorted', list)
         }
       
         return (
@@ -163,6 +176,7 @@ function List() {
                             <td>
                                 <button 
                                   type="button" 
+                                  id="completed"
                                   className={ sortConfig.key==='completed' ? sortConfig.direction : '' }
                                   onClick={ () => requestSort('completed') }
                                 >

@@ -70,6 +70,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### TO DO
 
+- Completed order toggle stuffs up order of list, ie. no longer ordered by ID
 - improve code performance & reduce re-rendering
 - Unit Testing
 - Edit/update functionality

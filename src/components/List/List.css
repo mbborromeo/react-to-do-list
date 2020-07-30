@@ -35,6 +35,20 @@ thead button.descending::after {
     margin-left: 1em;
 }
 
+thead button#completed {
+    min-width: 105px;
+}
+
+thead button#completed.ascending::after {
+    content: 'Y';
+    margin-left: 1em;
+}
+
+thead button#completed.descending::after {
+    content: 'N';
+    margin-left: 1em;
+}
+
 .completed {
     text-decoration: line-through;
 }
