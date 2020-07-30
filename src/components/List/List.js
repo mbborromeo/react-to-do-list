@@ -18,7 +18,7 @@ function List() {
     );
 
     // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
-    const completeToDo = (index) => { 
+    const completeToDo = (index) => {
         console.log('completeToDo index', index)
         const copyOfList = [...list];
         if( !copyOfList[index].completed ){
@@ -62,7 +62,7 @@ function List() {
     // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
     const getMaxID = () => {
         const ids = list.map( item => item.id );
-        const sorted = ids.sort( (a, b) => a-b ); // sort ascending order
+        const sorted = ids.sort( (a, b) => a - b ); // sort ascending order
         return sorted[ sorted.length - 1 ];
     };
 
@@ -110,7 +110,7 @@ function List() {
     );
       
     if( loaded && list.length > 0 ){
-        if( sortConfig.key !== null ){  
+        if( sortConfig.key !== null ){
             list.sort( (a, b) => {
                 if( a[sortConfig.key] < b[sortConfig.key] ){
                     return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -129,8 +129,8 @@ function List() {
                 <form>
                     <input 
                       type="text"
-                      value={newItem} 
-                      onChange={e => setNewItem(e.target.value)}
+                      value={ newItem } 
+                      onChange={ e => setNewItem(e.target.value) }
                     />
                     <input 
                       type="submit" 
@@ -174,21 +174,21 @@ function List() {
                     <tbody>
                     { 
                         list.map( (item, i) => (
-                            <tr key={item.id}>
+                            <tr key={ item.id }>
                                 <td>
-                                    <Link to={'/detail/'+ item.id} 
-                                      data-id={item.id} 
+                                    <Link to={ '/detail/'+ item.id } 
+                                      data-id={ item.id } 
                                       className={ item.completed ? 'completed' : '' }
                                     >
-                                        {item.id}
+                                        { item.id }
                                     </Link>
                                 </td>
                                 <td>
-                                    <Link to={'/detail/'+ item.id} 
-                                      data-id={item.id} 
+                                    <Link to={ '/detail/'+ item.id } 
+                                      data-id={ item.id } 
                                       className={ item.completed ? 'completed' : '' }
                                     >
-                                        {item.title}
+                                        { item.title }
                                     </Link>
                                 </td>
                                 <td>
