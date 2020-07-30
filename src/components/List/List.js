@@ -5,7 +5,6 @@ import './List.css';
 
 function List() {
     const [list, setList] = useState( [] );
-    //const [sortedField, setSortedField] = useState('null');
     const [sortConfig, setSortConfig] = useState( {key: 'id', direction: 'ascending'} );
     const [loaded, setLoaded] = useState(false);
     const [newItem, setNewItem] = useState('');
@@ -116,14 +115,14 @@ function List() {
         if( sortConfig.key !== null ){          
             list.sort( (a, b) => {
                 if( a[sortConfig.key] < b[sortConfig.key] ){
-                    if( sortConfig.key === 'completed' ){
+                    if( sortConfig.key === 'completed' ){ // completed has reversed order
                         return sortConfig.direction === 'ascending' ? 1 : -1;
                     } else {
                         return sortConfig.direction === 'ascending' ? -1 : 1;
                     }
                 }
                 if( a[sortConfig.key] > b[sortConfig.key] ){
-                    if( sortConfig.key === 'completed' ){
+                    if( sortConfig.key === 'completed' ){ // completed has reversed order
                         return sortConfig.direction === 'ascending' ? -1 : 1;
                     } else {
                         return sortConfig.direction === 'ascending' ? 1 : -1;

@@ -77,3 +77,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 - lint checking
 - feedback message of when an item has been added
 - CSS style, so add field is pinned to top
+- publish to GitHub Pages

@@ -5,37 +5,25 @@ import axios from 'axios-jsonp-pro';
 const API_BASE = 'https://jsonplaceholder.typicode.com/todos';
 
 class DataService {
-    getList(){ // queryString="react"
+    getList(){
         console.log("getList")
+        
         // return axios.get( ... );
         return axios.jsonp(
             API_BASE,
             {
-                timeout: 2000,
-                /*
-                params: {
-                    api: API_KEY //,
-                    //per_page: Constants.EVENTS_PER_PAGE,
-                    //page: currentPage,
-                    //search: queryString,
-                }
-                */
+                timeout: 2000
             }
         );        
     }
 
-    getDetail( idx ){ // queryString="react"
+    getDetail( idx ){
         console.log("getDetail")
         
         return axios.jsonp(
             API_BASE + `/${ idx }`,
             {
-                timeout: 2000,
-                /*
-                params: {
-                    api: API_KEY
-                }
-                */
+                timeout: 2000
             }
         );        
     }

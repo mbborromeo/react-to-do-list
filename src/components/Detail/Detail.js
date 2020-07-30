@@ -16,11 +16,6 @@ function Detail(props) {
     );
 
     // when you wrap a useCallback() hook around a function, the function inside it doesn't re-render 
-    /*
-        const getID = () => {
-            return props.match.params.id;
-        }
-    */
     const getID = useCallback(
         () => {
             return props.match.params.id;
