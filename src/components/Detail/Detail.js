@@ -7,7 +7,7 @@ function Detail(props) {
     const [detailID, setDetailID] = useState( undefined );
     const [detail, setDetail] = useState( {} );
     const [loaded, setLoaded] = useState(false);
-    const [error, setError] = useState(false);
+    const [hasError, setHasError] = useState(false);
     console.log('Detail detail', detail)
 
     // save a memoized copy of the function for re-use instead of creating a new function each time
@@ -39,23 +39,24 @@ function Detail(props) {
                 .catch( function (error) {
                     // handle error
                     console.error("axios.jsonp CATCH", error);
-                    setError( true );
+                    setHasError( true );
                 })
                 .finally( function () {
                     // always executed
                 });
-        }
-            
+        }        
     },
     [ dataService, detailID, getID ]
     );
 
     if( loaded && Object.keys(detail).length > 0 ){
-        console.log("details exist")
+        console.log('details exist')
         return (
             <div>
                 <span>
-                    Detail { detailID } for { detail.title } is { detail.completed }
+                    Detail { detailID } 
+                    for { detail.title } 
+                    is { detail.completed }
                 </span>
 
                 <br /><br />
@@ -70,7 +71,7 @@ function Detail(props) {
     } else if( loaded && Object.keys(detail).length === 0 ){
         return <div>No detail to display</div>;
     } else {
-        if( error ){
+        if( hasError ){
             return <div>Error loading</div>;
         } else {
             return <div>Loading...</div>;

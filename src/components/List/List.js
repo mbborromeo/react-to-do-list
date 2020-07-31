@@ -7,7 +7,7 @@ function List() {
     const [list, setList] = useState( [] );
     const [sortConfig, setSortConfig] = useState( {key: 'id', direction: 'ascending'} );
     const [loaded, setLoaded] = useState(false);
-    const [error, setError] = useState(false);
+    const [hasError, setHasError] = useState(false);
     const [newItem, setNewItem] = useState('');
     console.log('List list', list)
 
@@ -101,7 +101,7 @@ function List() {
             .catch( function (error) {
                 // handle error
                 console.error("axios.jsonp CATCH", error);
-                setError( true );
+                setHasError( true );
             })
             .finally( function () {
                 // always executed
@@ -111,9 +111,6 @@ function List() {
     );
       
     if( loaded && list.length > 0 ){
-        console.log('sort by sortConfig.key', sortConfig.key)
-        console.log('sortConfig.direction', sortConfig.direction)
-
         if( sortConfig.key !== null ){          
             list.sort( (a, b) => {
                 if( a[sortConfig.key] < b[sortConfig.key] ){
@@ -130,10 +127,17 @@ function List() {
                         return sortConfig.direction === 'ascending' ? 1 : -1;
                     }                    
                 }
+
+                // then sort by ID as well
+                if( a.id < b.id ){
+                    return -1;
+                }                 
+                if( a.id > b.id ){
+                    return 1;
+                }
+                
                 return 0;
             });
-
-            console.log('list sorted', list)
         }
       
         return (
@@ -222,7 +226,7 @@ function List() {
     } else if( loaded && list.length === 0 ){
         return <div>No results to display</div>;
     } else {
-        if( error ){
+        if( hasError ){
             return <div>Error loading</div>;
         } else {
             return <div>Loading...</div>;

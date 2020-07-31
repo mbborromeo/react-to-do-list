@@ -1,7 +1,7 @@
 import React from 'react';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'; // Redirect, 
 import List from './components/List/List';
 import Detail from './components/Detail/Detail';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'; // Redirect, 
 import './App.css';
 
 function App() {
