@@ -18,23 +18,29 @@ function List() {
     );
 
     // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
-    const completeToDo = (index) => {
-        console.log('completeToDo index', index)
-        const copyOfList = [...list];
-        if( !copyOfList[index].completed ){
-            copyOfList[index].completed = true;
-        } else {
-            copyOfList[index].completed = false;
-        }
-        
-        setList(copyOfList);
-    };
+    const completeToDo = useCallback(
+        (index) => {
+            console.log('completeToDo index', index)
+            const copyOfList = [...list];
+            if( !copyOfList[index].completed ){
+                copyOfList[index].completed = true;
+            } else {
+                copyOfList[index].completed = false;
+            }
+            
+            setList(copyOfList);
+        },
+        [ list ] // dependencies that require a re-render for
+    );
 
-    const deleteToDo = (index) => {
-        const copyOfList = [...list];
-        copyOfList.splice(index, 1);
-        setList(copyOfList);
-    };
+    const deleteToDo = useCallback(
+        (index) => {
+            const copyOfList = [...list];
+            copyOfList.splice(index, 1);
+            setList(copyOfList);
+        },
+        [ list ] // dependencies that require a re-render for
+    );
 
     /*
     const editToDo = (index, text) => {
@@ -45,48 +51,62 @@ function List() {
     */
 
     // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
-    const requestSort = (key) => {
-        let direction;
+    const requestSort = useCallback(
+        (key) => {
+            let direction;
 
-        // if requested key is same as current key
-        if( sortConfig.key===key && sortConfig.direction==='ascending' ){
-            direction = 'descending';
-        } else {
-            direction = 'ascending'; // by default
-        }
+            // if requested key is same as current key
+            if( sortConfig.key===key && sortConfig.direction==='ascending' ){
+                direction = 'descending';
+            } else {
+                direction = 'ascending'; // by default
+            }
 
-        // set to new key and direction
-        setSortConfig( {key, direction} );
-    };
+            // set to new key and direction
+            setSortConfig( {key, direction} );
+        },
+        [ sortConfig ] // dependencies that require a re-render for
+    );
+
 
     // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
-    const getMaxID = () => {
-        const ids = list.map( item => item.id );
-        const sorted = ids.sort( (a, b) => a - b ); // sort ascending order
-        return sorted[ sorted.length - 1 ];
-    };
+    const getMaxID = useCallback(
+        () => {
+            const ids = list.map( item => item.id );
+            const sorted = ids.sort( (a, b) => a - b ); // sort ascending order
+            return sorted[ sorted.length - 1 ];
+        },
+        [ list ]
+    );
 
-    const addToDo = (text) => {
-        const newListItem = {
-            userId: 99, // default user
-            id: getMaxID() + 1,
-            completed: false,
-            title: text
-        };
-        const newList = [...list, newListItem];
-        setList(newList);
-    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const addToDo = useCallback(
+        (text) => {
+            const newListItem = {
+                userId: 99, // default user
+                id: getMaxID() + 1,
+                completed: false,
+                title: text
+            };
+            const newList = [ ...list, newListItem ];
+            setList( newList );
+        },
+        [ list, getMaxID ]
+    );
 
-        if(!newItem){
-          return; //exit if field empty
-        }
+    const handleSubmit = useCallback(
+        (e) => {
+            e.preventDefault();
 
-        addToDo(newItem);
-        setNewItem(''); // reset field to empty
-    };
+            if( !newItem ){
+                return; //exit if field empty
+            }
+
+            addToDo( newItem );
+            setNewItem(''); // reset field to empty
+        },
+        [ newItem, addToDo ]
+    );
 
     useEffect( () => 
     {
