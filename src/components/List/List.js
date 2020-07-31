@@ -7,6 +7,7 @@ function List() {
     const [list, setList] = useState( [] );
     const [sortConfig, setSortConfig] = useState( {key: 'id', direction: 'ascending'} );
     const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState(false);
     const [newItem, setNewItem] = useState('');
     console.log('List list', list)
 
@@ -95,14 +96,15 @@ function List() {
             .then( function (response) {
                 // handle success
                 setList( response );
+                setLoaded( true );
             })
             .catch( function (error) {
                 // handle error
                 console.error("axios.jsonp CATCH", error);
+                setError( true );
             })
             .finally( function () {
                 // always executed
-                setLoaded( true );
             });
     },
     [ dataService ]
@@ -220,7 +222,11 @@ function List() {
     } else if( loaded && list.length === 0 ){
         return <div>No results to display</div>;
     } else {
-        return <div>Loading List</div>;
+        if( error ){
+            return <div>Error loading</div>;
+        } else {
+            return <div>Loading...</div>;
+        }
     }
 }
 
