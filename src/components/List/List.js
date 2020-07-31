@@ -3,12 +3,44 @@ import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
 import './List.css';
 
+function AddForm( {addFunction} ) {
+    const [newItem, setNewItem] = useState('');
+    
+    const handleSubmit = useCallback(
+        (e) => {
+            e.preventDefault();
+
+            if( !newItem ){
+                return; //exit if field empty
+            }
+
+            addFunction( newItem );
+            setNewItem(''); // reset field to empty
+        },
+        [ newItem, addFunction ]
+    );
+
+    return (
+        <form>
+            <input 
+                type="text"
+                value={ newItem } 
+                onChange={ e => setNewItem(e.target.value) }
+            />
+            <input 
+                type="submit" 
+                value="Add" 
+                onClick={ handleSubmit } 
+            />
+        </form>
+    );
+}
+
 function List() {
     const [list, setList] = useState( [] );
     const [sortConfig, setSortConfig] = useState( {key: 'id', direction: 'ascending'} );
     const [loaded, setLoaded] = useState(false);
-    const [hasError, setHasError] = useState(false);
-    const [newItem, setNewItem] = useState('');
+    const [hasError, setHasError] = useState(false);    
     console.log('List list', list)
 
     // save a memoized copy of the function for re-use instead of creating a new function each time
@@ -68,7 +100,6 @@ function List() {
         [ sortConfig ] // dependencies that require a re-render for
     );
 
-
     // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
     const getMaxID = useCallback(
         () => {
@@ -78,7 +109,6 @@ function List() {
         },
         [ list ]
     );
-
 
     const addToDo = useCallback(
         (text) => {
@@ -92,20 +122,6 @@ function List() {
             setList( newList );
         },
         [ list, getMaxID ]
-    );
-
-    const handleSubmit = useCallback(
-        (e) => {
-            e.preventDefault();
-
-            if( !newItem ){
-                return; //exit if field empty
-            }
-
-            addToDo( newItem );
-            setNewItem(''); // reset field to empty
-        },
-        [ newItem, addToDo ]
     );
 
     useEffect( () => 
@@ -130,8 +146,9 @@ function List() {
     [ dataService ]
     );
       
+    // possibly use useMemo here, and/or define a function for sort  
     if( loaded && list.length > 0 ){
-        if( sortConfig.key !== null ){          
+        if( sortConfig.key !== null ){                
             list.sort( (a, b) => {
                 if( a[sortConfig.key] < b[sortConfig.key] ){
                     if( sortConfig.key === 'completed' ){ // completed has reversed order
@@ -164,18 +181,7 @@ function List() {
             <div>
                 <h1>TO DO</h1>
 
-                <form>
-                    <input 
-                      type="text"
-                      value={ newItem } 
-                      onChange={ e => setNewItem(e.target.value) }
-                    />
-                    <input 
-                      type="submit" 
-                      value="Add" 
-                      onClick={ handleSubmit } 
-                    />
-                </form>
+                <AddForm addFunction={ addToDo } />
 
                 <table>                    
                     <thead>
