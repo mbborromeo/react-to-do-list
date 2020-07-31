@@ -1,40 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
+import AddForm from './AddForm/AddForm';
 import './List.css';
-
-function AddForm( {addFunction} ) {
-    const [newItem, setNewItem] = useState('');
-    
-    const handleSubmit = useCallback(
-        (e) => {
-            e.preventDefault();
-
-            if( !newItem ){
-                return; //exit if field empty
-            }
-
-            addFunction( newItem );
-            setNewItem(''); // reset field to empty
-        },
-        [ newItem, addFunction ]
-    );
-
-    return (
-        <form>
-            <input 
-                type="text"
-                value={ newItem } 
-                onChange={ e => setNewItem(e.target.value) }
-            />
-            <input 
-                type="submit" 
-                value="Add" 
-                onClick={ handleSubmit } 
-            />
-        </form>
-    );
-}
 
 function List() {
     const [list, setList] = useState( [] );
