@@ -23,7 +23,7 @@ function AddForm( {addFunction} ) {
               type="text"
               value={ newItem } 
               onChange={ e => setNewItem(e.target.value) }
-              onBlur={ e => setNewItem('') }
+              // onBlur={ e => setNewItem('') } INCORRECT as includes click on Add button
           />
           <input 
               type="submit" 
