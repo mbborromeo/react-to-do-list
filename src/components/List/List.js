@@ -99,7 +99,6 @@ function List() {
         dataService.getList()
             .then( function (response) {
                 // handle success
-                console.log('response', response)
                 setList( response );
                 //setLoaded( true );
             })
