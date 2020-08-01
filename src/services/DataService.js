@@ -6,8 +6,6 @@ const API_BASE = 'https://jsonplaceholder.typicode.com/todos';
 
 class DataService {
     getList(){
-        console.log("getList")
-        
         // return axios.get( ... );
         return axios.jsonp(
             API_BASE,
@@ -17,9 +15,7 @@ class DataService {
         );        
     }
 
-    getDetail( idx ){
-        console.log("getDetail")
-        
+    getDetail( idx ){        
         return axios.jsonp(
             API_BASE + `/${ idx }`,
             {

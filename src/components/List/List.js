@@ -7,7 +7,6 @@ import './List.css';
 function List() {
     const [list, setList] = useState( undefined ); // []
     const [sortConfig, setSortConfig] = useState( {key: 'id', direction: 'ascending'} );
-    //const [loaded, setLoaded] = useState(false);
     const [hasError, setHasError] = useState(false);    
     console.log('List list', list)
 
@@ -53,6 +52,7 @@ function List() {
     // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
     const requestSort = useCallback(
         (key) => {
+            console.log('requestSort')
             let direction;
 
             // if requested key is same as current key
@@ -98,9 +98,9 @@ function List() {
 
         dataService.getList()
             .then( function (response) {
+                console.log('getList success')
                 // handle success
                 setList( response );
-                //setLoaded( true );
             })
             .catch( function (error) {
                 // handle error
@@ -223,7 +223,7 @@ function List() {
         } else {
             return <div>No results to display</div>;
         }
-    } else { // list undefined
+    } else {
         if( hasError ){ // finished loading, but has error
             return <div>Error loading</div>;
         } else {
