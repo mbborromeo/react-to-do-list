@@ -17,18 +17,34 @@ function AddForm( {addFunction} ) {
       [ newItem, addFunction ]
   );
 
+  /*
+  const handleBlur = (e) => {
+        // click on Submit/Add button
+        if( e.target ... ){
+            e.preventDefault();
+        } else {
+            setNewItem('')
+        }
+  };
+  */
+
   return (
       <form>
           <input 
               type="text"
               value={ newItem } 
               onChange={ e => setNewItem(e.target.value) }
-              // onBlur={ e => setNewItem('') } INCORRECT as includes click on Add button
+              //onBlur={ handleBlur }
           />
           <input 
               type="submit" 
               value="Add" 
               onClick={ handleSubmit } 
+          />
+          <input 
+            type="button"
+            value="Clear"
+            onClick={ () => setNewItem('') }
           />
       </form>
   );
