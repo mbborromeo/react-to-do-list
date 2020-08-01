@@ -113,44 +113,51 @@ function List() {
     },
     [ dataService ]
     );
+
+    // sort list
+    const sortedList = useMemo( 
+        () => { 
+            if( list ){
+                list.sort( (a, b) => {
+                    console.log('sorting...')
+                    
+                    if( a[sortConfig.key] < b[sortConfig.key] ){
+                        if( sortConfig.key === 'completed' ){ // completed has reversed order
+                            return sortConfig.direction === 'ascending' ? 1 : -1;
+                        } else {
+                            return sortConfig.direction === 'ascending' ? -1 : 1;
+                        }
+                    }
+                    if( a[sortConfig.key] > b[sortConfig.key] ){
+                        if( sortConfig.key === 'completed' ){ // completed has reversed order
+                            return sortConfig.direction === 'ascending' ? -1 : 1;
+                        } else {
+                            return sortConfig.direction === 'ascending' ? 1 : -1;
+                        }                    
+                    }
+    
+                    // then sort by ID as well
+                    if( a.id < b.id ){
+                        return -1;
+                    }                 
+                    if( a.id > b.id ){
+                        return 1;
+                    }
+                    
+                    return 0;
+                });
+            } else {
+                return undefined;
+            }   
+        },
+        [ list, sortConfig ]
+    );
+
+    console.log('sortedList', sortedList)
     
     // possibly use useMemo here, and/or define a function for sort    
-    if( list ){
-        if( list.length > 0  ){
-            // sort list
-            const sortedList = useMemo( 
-                () => {            
-                    list.sort( (a, b) => {
-                        console.log('sorting...')
-                        
-                        if( a[sortConfig.key] < b[sortConfig.key] ){
-                            if( sortConfig.key === 'completed' ){ // completed has reversed order
-                                return sortConfig.direction === 'ascending' ? 1 : -1;
-                            } else {
-                                return sortConfig.direction === 'ascending' ? -1 : 1;
-                            }
-                        }
-                        if( a[sortConfig.key] > b[sortConfig.key] ){
-                            if( sortConfig.key === 'completed' ){ // completed has reversed order
-                                return sortConfig.direction === 'ascending' ? -1 : 1;
-                            } else {
-                                return sortConfig.direction === 'ascending' ? 1 : -1;
-                            }                    
-                        }
-
-                        // then sort by ID as well
-                        if( a.id < b.id ){
-                            return -1;
-                        }                 
-                        if( a.id > b.id ){
-                            return 1;
-                        }
-                        
-                        return 0;
-                    });
-                },
-                [ list, sortConfig ]
-            );
+    if( sortedList ){
+        if( sortedList.length > 0  ){           
 
             // render DOM
             return (
