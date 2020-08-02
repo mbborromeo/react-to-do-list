@@ -203,21 +203,21 @@ function List() {
                                 <tr key={item.id}>
                                     <td>
                                     <Link
-                                            to={`/detail/${item.id}`}
-                                            data-id={item.id}
-                                            className={item.completed ? 'completed' : ''}
-                                        >
-                                            { item.id }
-                                        </Link>
+                                        to={`/detail/${item.id}`}
+                                        data-id={item.id}
+                                        className={item.completed ? 'completed' : ''}
+                                    >
+                                        { item.id }
+                                    </Link>
                                 </td>
                                     <td>
                                     <Link
-                                            to={`/detail/${item.id}`}
-                                            data-id={item.id}
-                                            className={item.completed ? 'completed' : ''}
-                                        >
-                                            { item.title }
-                                        </Link>
+                                        to={`/detail/${item.id}`}
+                                        data-id={item.id}
+                                        className={item.completed ? 'completed' : ''}
+                                    >
+                                        { item.title }
+                                    </Link>
                                 </td>
                                     <td>
                                         <button onClick={() => completeToDo(i)}>
