@@ -17,7 +17,7 @@ function AddForm({ addFunction }) {
     [newItem, addFunction]
   );
 
-    /*
+  /*
   const handleBlur = (e) => {
         // click on Submit/Add button
         if( e.target ... ){
