@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
 import '../../App.css';
 
-function Detail(props) {
+function Detail({ match }) {
   const [detailID, setDetailID] = useState(undefined);
   const [detail, setDetail] = useState({});
   const [loaded, setLoaded] = useState(false);
@@ -20,8 +20,8 @@ function Detail(props) {
 
   // when you wrap a useCallback() hook around a function, the function inside it doesn't re-render
   const getID = useCallback(
-    () => props.match.params.id,
-    [props.match.params.id] // dependencies that require a re-render for
+    () => match.params.id,
+    [match.params.id] // dependencies that require a re-render for
   );
 
   useEffect(() => {
