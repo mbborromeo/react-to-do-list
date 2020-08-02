@@ -202,29 +202,29 @@ function List() {
                             sortedList.map((item, i) => (
                                 <tr key={item.id}>
                                     <td>
-                                    <Link
-                                        to={`/detail/${item.id}`}
-                                        data-id={item.id}
-                                        className={item.completed ? 'completed' : ''}
-                                    >
-                                        { item.id }
-                                    </Link>
-                                </td>
+                                        <Link
+                                            to={`/detail/${item.id}`}
+                                            data-id={item.id}
+                                            className={item.completed ? 'completed' : ''}
+                                        >
+                                            { item.id }
+                                        </Link>
+                                    </td>
                                     <td>
-                                    <Link
-                                        to={`/detail/${item.id}`}
-                                        data-id={item.id}
-                                        className={item.completed ? 'completed' : ''}
-                                    >
-                                        { item.title }
-                                    </Link>
-                                </td>
+                                        <Link
+                                            to={`/detail/${item.id}`}
+                                            data-id={item.id}
+                                            className={item.completed ? 'completed' : ''}
+                                        >
+                                            { item.title }
+                                        </Link>
+                                    </td>
                                     <td>
                                         <button onClick={() => completeToDo(i)}>
-                                        { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
+                                            { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
                                         </button>
-                                    <button onClick={() => deleteToDo(i)}>X</button>
-                                </td>
+                                        <button onClick={() => deleteToDo(i)}>X</button>
+                                    </td>
                                 </tr>
                             ))
                         }
