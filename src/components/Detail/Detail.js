@@ -1,82 +1,86 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, {
+    useState, useEffect, useMemo, useCallback
+} from 'react';
 import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
 import '../../App.css';
 
 function Detail(props) {
-    const [detailID, setDetailID] = useState( undefined );
-    const [detail, setDetail] = useState( {} );
+    const [detailID, setDetailID] = useState(undefined);
+    const [detail, setDetail] = useState({});
     const [loaded, setLoaded] = useState(false);
     const [hasError, setHasError] = useState(false);
-    console.log('Detail detail', detail)
+    console.log('Detail detail', detail);
 
     // save a memoized copy of the function for re-use instead of creating a new function each time
-    const dataService = useMemo( 
+    const dataService = useMemo(
         () => new DataService(),
         []
     );
 
-    // when you wrap a useCallback() hook around a function, the function inside it doesn't re-render 
+    // when you wrap a useCallback() hook around a function, the function inside it doesn't re-render
     const getID = useCallback(
-        () => {
-            return props.match.params.id;
-        },
-        [ props.match.params.id ] // dependencies that require a re-render for
+        () => props.match.params.id,
+        [props.match.params.id] // dependencies that require a re-render for
     );
 
-    useEffect( () => 
-    {
-        console.log("Detail useEffect")
-        setDetailID( getID() );
+    useEffect(() => {
+        console.log('Detail useEffect');
+        setDetailID(getID());
 
-        if( detailID ){
-            dataService.getDetail( detailID )
-                .then( function (response) {
+        if (detailID) {
+            dataService.getDetail(detailID)
+                .then((response) => {
                     // handle success
-                    setDetail( response );
-                    setLoaded( true );
+                    setDetail(response);
+                    setLoaded(true);
                 })
-                .catch( function (error) {
+                .catch((error) => {
                     // handle error
-                    console.error("axios.jsonp CATCH", error);
-                    setHasError( true );
+                    console.error('axios.jsonp CATCH', error);
+                    setHasError(true);
                 })
-                .finally( function () {
+                .finally(() => {
                     // always executed
                 });
-        }        
+        }
     },
-    [ dataService, detailID, getID ]
-    );
+    [dataService, detailID, getID]);
 
-    if( loaded && Object.keys(detail).length > 0 ){
-        console.log('details exist')
+    if (loaded && Object.keys(detail).length > 0) {
+        console.log('details exist');
         return (
             <div>
                 <span>
-                    Detail { detailID } 
-                    for { detail.title } 
-                    is { detail.completed }
+                    ID: 
+                    {' '}
+                    { detailID }
+                    <br />
+                    Title:
+                    {' '}
+                    { detail.title }
+                    <br />
+                    is
+                    {' '}
+                    { detail.completed }
                 </span>
 
-                <br /><br />
-                <Link 
-                    to={'/'}
-                    className='button back'
+                <br />
+                <br />
+                <Link
+                    to="/"
+                    className="button back"
                 >
-                    &lt; Back 
+                    &lt; Back
                 </Link>
             </div>
         );
-    } else if( loaded && Object.keys(detail).length === 0 ){
+    } if (loaded && Object.keys(detail).length === 0) {
         return <div>No detail to display</div>;
-    } else {
-        if( hasError ){
-            return <div>Error loading</div>;
-        } else {
-            return <div>Loading...</div>;
-        }
+    } if (hasError) {
+        return <div>Error loading</div>;
     }
+    return <div>Loading...</div>;
 }
 
 export default Detail;
