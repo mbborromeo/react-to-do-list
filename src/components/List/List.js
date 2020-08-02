@@ -1,5 +1,5 @@
 import React, {
-    useState, useEffect, useMemo, useCallback
+  useState, useEffect, useMemo, useCallback
 } from 'react';
 import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
@@ -7,43 +7,43 @@ import AddForm from './AddForm/AddForm';
 import './List.css';
 
 function List() {
-    const [list, setList] = useState(undefined); // []
-    const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
-    const [hasError, setHasError] = useState(false);
-    console.log('List list', list);
+  const [list, setList] = useState(undefined); // []
+  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
+  const [hasError, setHasError] = useState(false);
+  console.log('List list', list);
 
-    // save a memoized copy of the function for re-use instead of creating a new function each time
-    const dataService = useMemo(
-        () => new DataService(),
-        []
-    );
+  // save a memoized copy of the function for re-use instead of creating a new function each time
+  const dataService = useMemo(
+    () => new DataService(),
+    []
+  );
 
-    // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
-    const completeToDo = useCallback(
-        (index) => {
-            console.log('completeToDo index', index);
-            const copyOfList = [...list];
-            if (!copyOfList[index].completed) {
-                copyOfList[index].completed = true;
-            } else {
-                copyOfList[index].completed = false;
-            }
+  // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
+  const completeToDo = useCallback(
+    (index) => {
+      console.log('completeToDo index', index);
+      const copyOfList = [...list];
+      if (!copyOfList[index].completed) {
+        copyOfList[index].completed = true;
+      } else {
+        copyOfList[index].completed = false;
+      }
 
-            setList(copyOfList);
-        },
-        [list] // dependencies that require a re-render for
-    );
+      setList(copyOfList);
+    },
+    [list] // dependencies that require a re-render for
+  );
 
-    const deleteToDo = useCallback(
-        (index) => {
-            const copyOfList = [...list];
-            copyOfList.splice(index, 1);
-            setList(copyOfList);
-        },
-        [list] // dependencies that require a re-render for
-    );
+  const deleteToDo = useCallback(
+    (index) => {
+      const copyOfList = [...list];
+      copyOfList.splice(index, 1);
+      setList(copyOfList);
+    },
+    [list] // dependencies that require a re-render for
+  );
 
-    /*
+  /*
     const editToDo = (index, text) => {
         const copyOfList = [...list];
         copyOfList[index].title = text;

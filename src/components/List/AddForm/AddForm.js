@@ -1,21 +1,21 @@
 import React, { useState, useCallback } from 'react';
 
 function AddForm({ addFunction }) {
-    const [newItem, setNewItem] = useState('');
+  const [newItem, setNewItem] = useState('');
 
-    const handleSubmit = useCallback(
-        (e) => {
-            e.preventDefault();
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-            if (!newItem) {
-                return; // exit if field empty
-            }
+      if (!newItem) {
+        return; // exit if field empty
+      }
 
-            addFunction(newItem);
-            setNewItem(''); // reset field to empty
-        },
-        [newItem, addFunction]
-    );
+      addFunction(newItem);
+      setNewItem(''); // reset field to empty
+    },
+    [newItem, addFunction]
+  );
 
     /*
   const handleBlur = (e) => {
@@ -28,25 +28,25 @@ function AddForm({ addFunction }) {
   };
   */
 
-    return (
-        <form>
-            <input
-                type="text"
-                value={newItem}
-                onChange={(e) => setNewItem(e.target.value)}
-            />
-            <input
-                type="submit"
-                value="Add"
-                onClick={handleSubmit}
-            />
-            <input
-                type="button"
-                value="Clear"
-                onClick={() => setNewItem('')}
-            />
-      </form>
-    );
+  return (
+    <form>
+      <input
+        type="text"
+        value={newItem}
+        onChange={(e) => setNewItem(e.target.value)}
+      />
+      <input
+        type="submit"
+        value="Add"
+        onClick={handleSubmit}
+      />
+      <input
+        type="button"
+        value="Clear"
+        onClick={() => setNewItem('')}
+      />
+    </form>
+  );
 }
 
 export default AddForm;
