@@ -18,58 +18,70 @@ function List() {
     []
   );
 
+  const getArrayIndexOfItem = useCallback(
+    (id) => {
+      const isItemOfInterest = (element) => element.id === id;
+      return list.findIndex(isItemOfInterest);
+    },
+    [list]
+  );
+
   // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
   const completeToDo = useCallback(
-    (index) => {
-      console.log('completeToDo index', index);
+    (id) => {
+      const indexOfItem = getArrayIndexOfItem(id);
       const copyOfList = [...list];
-      if (!copyOfList[index].completed) {
-        copyOfList[index].completed = true;
+
+      if (!copyOfList[indexOfItem].completed) {
+        copyOfList[indexOfItem].completed = true;
       } else {
-        copyOfList[index].completed = false;
+        copyOfList[indexOfItem].completed = false;
       }
 
       setList(copyOfList);
     },
-    [list] // dependencies that require a re-render for
+    [list, getArrayIndexOfItem] // dependencies that require a re-render for
   );
 
   const deleteToDo = useCallback(
-    (index) => {
-      console.log('deleteToDo index', index)
+    (id) => {
+      console.log('deleteToDo id', id);
+
+      const indexOfItem = getArrayIndexOfItem(id);
+      console.log('deleteToDo indexOfItem', indexOfItem);
+
       const copyOfList = [...list];
-      copyOfList.splice(index, 1);
+      copyOfList.splice(indexOfItem, 1);
       setList(copyOfList);
     },
-    [list] // dependencies that require a re-render for
+    [list, getArrayIndexOfItem] // dependencies that require a re-render for
   );
 
   // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
   const getMaxID = useCallback(
     () => {
-        const ids = list.map((item) => item.id);
-        const sorted = ids.sort((a, b) => a - b); // sort ascending order
-        return sorted[sorted.length - 1];
+      const ids = list.map((item) => item.id);
+      const sorted = ids.sort((a, b) => a - b); // sort ascending order
+      return sorted[sorted.length - 1];
     },
     [list]
   );
 
   const addToDo = useCallback(
     (text) => {
-        const newListItem = {
+      const newListItem = {
         userId: 99, // default user
         id: getMaxID() + 1,
         completed: false,
         title: text
-        };
-        console.log('addToDo', newListItem.id)
-        
-        const newList = [...list, newListItem]; // add new item to end of list
-        setList(newList);
+      };
+
+      const newList = [...list, newListItem]; // add new item to end of list
+      setList(newList);
     },
     [list, getMaxID]
   );
-    
+
   /*
     const editToDo = (index, text) => {
         const copyOfList = [...list];
@@ -81,7 +93,6 @@ function List() {
   // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
   const requestSort = useCallback(
     (key) => {
-      console.log('requestSort');
       let direction;
 
       // if requested key is same as current key
@@ -102,7 +113,6 @@ function List() {
 
     dataService.getList()
       .then((response) => {
-        console.log('getList success');
         // handle success
         setList(response);
       })
@@ -148,7 +158,7 @@ function List() {
 
           return 0;
         });
-        
+
         return sortedList;
       }
       return undefined;
@@ -203,7 +213,7 @@ function List() {
             </thead>
             <tbody>
               {
-                sortedResults.map((item, i) => (
+                sortedResults.map((item) => (
                   <tr key={item.id}>
                     <td>
                       <Link
@@ -224,10 +234,10 @@ function List() {
                       </Link>
                     </td>
                     <td>
-                      <button type="button" onClick={() => completeToDo(item.id - 1)}>
+                      <button type="button" onClick={() => completeToDo(item.id)}>
                         { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
                       </button>
-                      <button type="button" onClick={() => deleteToDo(item.id - 1)}>X</button>
+                      <button type="button" onClick={() => deleteToDo(item.id)}>X</button>
                     </td>
                   </tr>
                 ))
