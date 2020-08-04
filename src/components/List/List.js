@@ -29,7 +29,10 @@ function List() {
   // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
   const completeToDo = useCallback(
     (id) => {
+      console.log('completeToDo id', id);
       const indexOfItem = getArrayIndexOfItem(id);
+      console.log('completeToDo indexOfItem', indexOfItem);
+
       const copyOfList = [...list];
 
       if (!copyOfList[indexOfItem].completed) {
@@ -46,13 +49,14 @@ function List() {
   const deleteToDo = useCallback(
     (id) => {
       console.log('deleteToDo id', id);
-
       const indexOfItem = getArrayIndexOfItem(id);
       console.log('deleteToDo indexOfItem', indexOfItem);
 
-      const copyOfList = [...list];
-      copyOfList.splice(indexOfItem, 1);
-      setList(copyOfList);
+      // const copyOfList = [...list];
+      // copyOfList.splice(indexOfItem, 1);
+      const filteredList = list.filter( (elem) => { return elem.id !== id } );
+
+      setList(filteredList); // copyOfList
     },
     [list, getArrayIndexOfItem] // dependencies that require a re-render for
   );
