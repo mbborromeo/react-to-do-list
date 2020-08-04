@@ -10,7 +10,7 @@ function List() {
   const [list, setList] = useState(undefined); // []
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
   const [hasError, setHasError] = useState(false);
-  console.log('List list', list);
+  console.log('list state', list);
 
   // save a memoized copy of the function for re-use instead of creating a new function each time
   const dataService = useMemo(
@@ -36,6 +36,7 @@ function List() {
 
   const deleteToDo = useCallback(
     (index) => {
+      console.log('deleteToDo index', index)
       const copyOfList = [...list];
       copyOfList.splice(index, 1);
       setList(copyOfList);
@@ -88,6 +89,8 @@ function List() {
         completed: false,
         title: text
       };
+      console.log('addToDo', newListItem.id)
+      
       const newList = [...list, newListItem];
       setList(newList);
     },
@@ -115,12 +118,13 @@ function List() {
   [dataService]);
 
   // sort list
-  const sortedList = useMemo(
+  const sortedResults = useMemo(
     () => {
       if (list) {
         console.log('sorting...');
+        const sortedList = [...list];
 
-        list.sort((a, b) => {
+        sortedList.sort((a, b) => {
           if (a[sortConfig.key] < b[sortConfig.key]) {
             if (sortConfig.key === 'completed') { // completed has reversed order
               return sortConfig.direction === 'ascending' ? 1 : -1;
@@ -144,19 +148,19 @@ function List() {
 
           return 0;
         });
-
-        return list;
+        
+        return sortedList;
       }
       return undefined;
     },
     [list, sortConfig]
   );
 
-  console.log('sortedList', sortedList);
+  console.log('sortedResults', sortedResults);
 
   // possibly use useMemo here, and/or define a function for sort
-  if (sortedList) {
-    if (sortedList.length > 0) {
+  if (sortedResults) {
+    if (sortedResults.length > 0) {
       // render DOM
       return (
         <div>
@@ -199,7 +203,7 @@ function List() {
             </thead>
             <tbody>
               {
-                sortedList.map((item, i) => (
+                sortedResults.map((item, i) => (
                   <tr key={item.id}>
                     <td>
                       <Link
@@ -220,10 +224,10 @@ function List() {
                       </Link>
                     </td>
                     <td>
-                      <button type="button" onClick={() => completeToDo(i)}>
+                      <button type="button" onClick={() => completeToDo(item.id - 1)}>
                         { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
                       </button>
-                      <button type="button" onClick={() => deleteToDo(i)}>X</button>
+                      <button type="button" onClick={() => deleteToDo(item.id - 1)}>X</button>
                     </td>
                   </tr>
                 ))
