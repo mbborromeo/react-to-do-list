@@ -44,6 +44,32 @@ function List() {
     [list] // dependencies that require a re-render for
   );
 
+  // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
+  const getMaxID = useCallback(
+    () => {
+        const ids = list.map((item) => item.id);
+        const sorted = ids.sort((a, b) => a - b); // sort ascending order
+        return sorted[sorted.length - 1];
+    },
+    [list]
+  );
+
+  const addToDo = useCallback(
+    (text) => {
+        const newListItem = {
+        userId: 99, // default user
+        id: getMaxID() + 1,
+        completed: false,
+        title: text
+        };
+        console.log('addToDo', newListItem.id)
+        
+        const newList = [...list, newListItem]; // add new item to end of list
+        setList(newList);
+    },
+    [list, getMaxID]
+  );
+    
   /*
     const editToDo = (index, text) => {
         const copyOfList = [...list];
@@ -69,32 +95,6 @@ function List() {
       setSortConfig({ key, direction });
     },
     [sortConfig] // dependencies that require a re-render for
-  );
-
-  // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
-  const getMaxID = useCallback(
-    () => {
-      const ids = list.map((item) => item.id);
-      const sorted = ids.sort((a, b) => a - b); // sort ascending order
-      return sorted[sorted.length - 1];
-    },
-    [list]
-  );
-
-  const addToDo = useCallback(
-    (text) => {
-      const newListItem = {
-        userId: 99, // default user
-        id: getMaxID() + 1,
-        completed: false,
-        title: text
-      };
-      console.log('addToDo', newListItem.id)
-      
-      const newList = [...list, newListItem];
-      setList(newList);
-    },
-    [list, getMaxID]
   );
 
   useEffect(() => {
