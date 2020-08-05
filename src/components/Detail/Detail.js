@@ -10,7 +10,6 @@ function Detail({ match }) {
   const [detail, setDetail] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  console.log('Detail detail', detail);
 
   // save a memoized copy of the function for re-use instead of creating a new function each time
   const dataService = useMemo(
@@ -25,7 +24,6 @@ function Detail({ match }) {
   );
 
   useEffect(() => {
-    console.log('Detail useEffect');
     setDetailID(getID());
 
     if (detailID) {
@@ -48,7 +46,6 @@ function Detail({ match }) {
   [dataService, detailID, getID]);
 
   if (loaded && Object.keys(detail).length > 0) {
-    console.log('details exist');
     return (
       <div>
         <span>

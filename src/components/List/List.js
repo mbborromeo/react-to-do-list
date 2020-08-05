@@ -10,7 +10,7 @@ function List() {
   const [list, setList] = useState(undefined); // []
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
   const [hasError, setHasError] = useState(false);
-  console.log('List list', list);
+  console.log('list state', list);
 
   // save a memoized copy of the function for re-use instead of creating a new function each time
   const dataService = useMemo(
@@ -18,56 +18,47 @@ function List() {
     []
   );
 
+  const getArrayIndexOfItem = useCallback(
+    (id) => {
+      const isItemOfInterest = (element) => element.id === id;
+      return list.findIndex(isItemOfInterest);
+    },
+    [list]
+  );
+
   // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
   const completeToDo = useCallback(
-    (index) => {
-      console.log('completeToDo index', index);
+    (id) => {
+      console.log('completeToDo id', id);
+      const indexOfItem = getArrayIndexOfItem(id);
+      console.log('completeToDo indexOfItem', indexOfItem);
+
       const copyOfList = [...list];
-      if (!copyOfList[index].completed) {
-        copyOfList[index].completed = true;
+
+      if (!copyOfList[indexOfItem].completed) {
+        copyOfList[indexOfItem].completed = true;
       } else {
-        copyOfList[index].completed = false;
+        copyOfList[indexOfItem].completed = false;
       }
 
       setList(copyOfList);
     },
-    [list] // dependencies that require a re-render for
+    [list, getArrayIndexOfItem] // dependencies that require a re-render for
   );
 
   const deleteToDo = useCallback(
-    (index) => {
-      const copyOfList = [...list];
-      copyOfList.splice(index, 1);
-      setList(copyOfList);
+    (id) => {
+      console.log('deleteToDo id', id);
+      const indexOfItem = getArrayIndexOfItem(id);
+      console.log('deleteToDo indexOfItem', indexOfItem);
+
+      // const copyOfList = [...list];
+      // copyOfList.splice(indexOfItem, 1);
+      const filteredList = list.filter( (elem) => { return elem.id !== id } );
+
+      setList(filteredList); // copyOfList
     },
-    [list] // dependencies that require a re-render for
-  );
-
-  /*
-    const editToDo = (index, text) => {
-        const copyOfList = [...list];
-        copyOfList[index].title = text;
-        setList(copyOfList);
-    };
-    */
-
-  // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
-  const requestSort = useCallback(
-    (key) => {
-      console.log('requestSort');
-      let direction;
-
-      // if requested key is same as current key
-      if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-        direction = 'descending';
-      } else {
-        direction = 'ascending'; // by default
-      }
-
-      // set to new key and direction
-      setSortConfig({ key, direction });
-    },
-    [sortConfig] // dependencies that require a re-render for
+    [list, getArrayIndexOfItem] // dependencies that require a re-render for
   );
 
   // Reference: https://www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
@@ -88,10 +79,37 @@ function List() {
         completed: false,
         title: text
       };
-      const newList = [...list, newListItem];
+
+      const newList = [...list, newListItem]; // add new item to end of list
       setList(newList);
     },
     [list, getMaxID]
+  );
+
+  /*
+    const editToDo = (index, text) => {
+        const copyOfList = [...list];
+        copyOfList[index].title = text;
+        setList(copyOfList);
+    };
+    */
+
+  // Reference: https://www.smashingmagazine.com/2020/03/sortable-tables-react/
+  const requestSort = useCallback(
+    (key) => {
+      let direction;
+
+      // if requested key is same as current key
+      if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+        direction = 'descending';
+      } else {
+        direction = 'ascending'; // by default
+      }
+
+      // set to new key and direction
+      setSortConfig({ key, direction });
+    },
+    [sortConfig] // dependencies that require a re-render for
   );
 
   useEffect(() => {
@@ -99,7 +117,6 @@ function List() {
 
     dataService.getList()
       .then((response) => {
-        console.log('getList success');
         // handle success
         setList(response);
       })
@@ -114,13 +131,14 @@ function List() {
   },
   [dataService]);
 
-  // possibly use useMemo here, and/or define a function for sort
-  if (list) {
-    if (list.length > 0) {
-      if (sortConfig.key !== null) {
+  // sort list
+  const sortedResults = useMemo(
+    () => {
+      if (list) {
         console.log('sorting...');
+        const sortedList = [...list];
 
-        list.sort((a, b) => {
+        sortedList.sort((a, b) => {
           if (a[sortConfig.key] < b[sortConfig.key]) {
             if (sortConfig.key === 'completed') { // completed has reversed order
               return sortConfig.direction === 'ascending' ? 1 : -1;
@@ -144,8 +162,20 @@ function List() {
 
           return 0;
         });
-      }
 
+        return sortedList;
+      }
+      return undefined;
+    },
+    [list, sortConfig]
+  );
+
+  console.log('sortedResults', sortedResults);
+
+  // possibly use useMemo here, and/or define a function for sort
+  if (sortedResults) {
+    if (sortedResults.length > 0) {
+      // render DOM
       return (
         <div>
           <h1>TO DO</h1>
@@ -187,7 +217,7 @@ function List() {
             </thead>
             <tbody>
               {
-                list.map((item, i) => (
+                sortedResults.map((item) => (
                   <tr key={item.id}>
                     <td>
                       <Link
@@ -208,10 +238,10 @@ function List() {
                       </Link>
                     </td>
                     <td>
-                      <button type="button" onClick={() => completeToDo(i)}>
+                      <button type="button" onClick={() => completeToDo(item.id)}>
                         { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
                       </button>
-                      <button type="button" onClick={() => deleteToDo(i)}>X</button>
+                      <button type="button" onClick={() => deleteToDo(item.id)}>X</button>
                     </td>
                   </tr>
                 ))
