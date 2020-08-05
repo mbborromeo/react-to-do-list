@@ -8,10 +8,3 @@ test('App renders loading initially', () => {
   const loading = getByText('Loading...');
   expect( loading ).toBeInTheDocument();
 });
-
-// Wait for items to load and display
-test('Heading renders after API results are returned', () => {
-  await wait(
-    () => expect(screen.getByText('TO DO')).toBeInTheDocument()
-  );
-});

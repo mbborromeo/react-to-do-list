@@ -52,5 +52,14 @@ describe('List', () => {
     await wait(
       () => expect(screen.getByText('New item')).toBeInTheDocument()
     );
+
+    // Delete item 1 
+    // Q - how to distinguish delete/X button of 'Item 1' has been clicked?
+    await userEvent.click(
+      screen.getAllByRole('button', {name: 'X'})[0]
+    );
+    await wait(
+      () => expect(screen.getByText('Item 1')).not.toBeInTheDocument()
+    );
   })
 })
