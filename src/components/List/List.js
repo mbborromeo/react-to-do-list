@@ -54,7 +54,7 @@ function List() {
 
       // const copyOfList = [...list];
       // copyOfList.splice(indexOfItem, 1);
-      const filteredList = list.filter( (elem) => { return elem.id !== id } );
+      const filteredList = list.filter((elem) => elem.id !== id);
 
       setList(filteredList); // copyOfList
     },
