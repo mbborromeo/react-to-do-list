@@ -70,11 +70,9 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### TO DO
 
-- Completed order toggle stuffs up order of list, ie. no longer ordered by ID
-- improve code performance & reduce re-rendering
 - Unit Testing
-- Edit/update functionality
-- lint checking
+- improve code performance & reduce re-rendering
+- include Edit/update functionality
 - feedback message of when an item has been added
 - CSS style, so add field is pinned to top
 - publish to GitHub Pages
