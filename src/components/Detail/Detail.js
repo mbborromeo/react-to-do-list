@@ -48,16 +48,24 @@ function Detail({ match }) {
   if (loaded && Object.keys(detail).length > 0) {
     return (
       <div>
-        <span>
-          Detail
+        <span id="id">
+          ID:
           {' '}
           { detailID }
-          for
+        </span>
+        <br />
+
+        <span id="title">
+          Title:
           {' '}
           { detail.title }
-          is
+        </span>
+        <br />
+        
+        <span id="completed">
+          Completed:
           {' '}
-          { detail.completed }
+          { detail.completed.toString() }
         </span>
 
         <br />
