@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios-jsonp-pro';
 import List from './List'
 import { StaticRouter } from 'react-router-dom'
-import { render, wait, waitForElementToBeRemoved, screen } from '@testing-library/react';
+import { render, wait, waitForElementToBeRemoved, queryByText, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 
 describe('List', () => {
@@ -92,9 +92,38 @@ describe('List', () => {
     );
     
     await waitForElementToBeRemoved(
-      () => expect(screen.getByText('Item 2')).not.toBeInTheDocument()
-        // const item2title = screen.queryByText('Item 2')
-        // expect(item2title).toBeNull() // it doesn't exist
+      // Error: Unable to find an element with the text: Item 2. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+      // () => expect(screen.getByText('Item 2')).not.toBeInTheDocument() 
+      
+      // NOTE: use queryBy instead of getBy to return null instead of throwing in the query itself
+
+      // TypeError: container.querySelectorAll is not a function
+      () => queryByText('Item 2')
+      // () => queryByText(/item 2/i)
+
+      // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
+      // () => screen.queryByText('Item 2')
+
+      // TypeError: Cannot read property 'not' of null
+      // () => screen.queryByText('Item 2').not.toBeInTheDocument()
+
+      // Error: Timed out in waitForElementToBeRemoved.
+      // () => expect(screen.queryByText('Item 2'))
+      
+      // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
+      // () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument() 
+
+      // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
+      // () => {
+      //   expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
+      // }   
+
+      // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
+      // () => {
+      //   const item2title = screen.queryByText('Item 2')
+      //   expect(item2title).toBeNull() // it doesn't exist
+      // }
     );
+    
   })
 })

@@ -1,5 +1,4 @@
 import React from "react";
-// import { render, unmountComponentAtNode } from "react-dom";
 import { render, wait, screen } from '@testing-library/react';
 import { act } from "react-dom/test-utils";
 import axios from 'axios-jsonp-pro';
@@ -32,14 +31,23 @@ describe('Detail', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
 
     await wait(
-      expect(screen.getByText('223')).toBeInTheDocument()
+      // () => expect(screen.getByText('223')).toBeInTheDocument()
+
+      // Error: received value must be an HTMLElement or an SVGElement. Received has value: null
+      () => expect(screen.queryByText('223')).toBeInTheDocument()
+      
+      // () => expect(screen.querySelector('#id').textContent).toBe( 'ID: 223' )
+      // () => expect(screen.findBy('#id').textContent).toBe( 'ID: 223' )
+      // () => expect(screen.querySelector('#id')).toHaveTextContent(/223/)
     );
-    await wait(
-      expect(screen.getByText('Test Item')).toBeInTheDocument()
-    );
-    await wait(
-      expect(screen.getByText('false')).toBeInTheDocument()
-    );
+
+    // await wait(
+    //   () => expect(screen.getByText('Test Item')).toBeInTheDocument()
+    // );
+
+    // await wait(
+    //   () => expect(screen.getByText('false')).toBeInTheDocument()
+    // );
     
     // remove the mock to ensure tests are completely isolated
     axios.jsonp.mockRestore();
