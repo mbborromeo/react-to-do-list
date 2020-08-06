@@ -2,9 +2,8 @@ import React from 'react';
 import axios from 'axios-jsonp-pro';
 import List from './List'
 import { StaticRouter } from 'react-router-dom'
-import { render, wait, screen } from '@testing-library/react';
+import { render, wait, waitForElementToBeRemoved, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom/extend-expect'
 
 describe('List', () => {
   it('allows adding an item', async () => {
@@ -76,12 +75,29 @@ describe('List', () => {
       </StaticRouter>
     );
 
-    // Delete item 2
-    await userEvent.click(
-      screen.getByLabelText('Delete item 2')
-    );
+    // Make sure loading indicator comes up first
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
+    // Wait for items to load and display
+    /*
     await wait(
-      () => expect(screen.getByText('Item 2')).not.toBeInTheDocument()
+      () => expect(screen.getByText('Item 2')).toBeInTheDocument()
+    );
+    */
+
+    // Delete item 2
+    // wait - keeps trying to click an element with label until it succeeds (or timeout is reached)
+    await wait(
+      () => userEvent.click(
+        screen.getByLabelText('Delete item 2')
+      )
+    );
+    
+    await waitForElementToBeRemoved(
+      () => {
+        expect(screen.getByText('Item 2')).toBeInTheDocument()
+        expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
+      }
     );
   })
 })
