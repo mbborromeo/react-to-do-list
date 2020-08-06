@@ -4,6 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 // import '@testing-library/dom';
+/*
 import {
   getByLabelText,
   getByText,
@@ -14,3 +15,4 @@ import {
   // called "queries" which you could import here as well
   waitFor,
 } from '@testing-library/dom'
+*/

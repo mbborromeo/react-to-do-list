@@ -91,15 +91,15 @@ describe('List', () => {
       )
     );
     
-    //await waitForElementToBeRemoved(
-    await waitFor(
+    // await waitFor(
+    await waitForElementToBeRemoved(    
       // Error: Unable to find an element with the text: Item 2. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
       // () => expect(screen.getByText('Item 2')).not.toBeInTheDocument() 
       
       // NOTE: use queryBy instead of getBy to return null instead of throwing in the query itself
 
       // TypeError: container.querySelectorAll is not a function
-      // () => queryByText('Item 2')
+      () => queryByText('Item 2')
       // () => queryByText(/item 2/i)
 
       // () => findByText('Item 2')
@@ -115,7 +115,7 @@ describe('List', () => {
       
       // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
       // New Error after using waitFor:  Warning: An update to List inside a test was not wrapped in act(...)
-      () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument() 
+      // () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument() 
 
       // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
       // () => {
