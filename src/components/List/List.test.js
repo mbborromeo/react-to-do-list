@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios-jsonp-pro';
 import List from './List'
-import { render, wait, screen } from '@testing-library/react';
 import { StaticRouter } from 'react-router-dom'
+import { render, wait, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom/extend-expect'
 
 describe('List', () => {
   it('allows adding an item', async () => {
@@ -52,14 +53,35 @@ describe('List', () => {
     await wait(
       () => expect(screen.getByText('New item')).toBeInTheDocument()
     );
+  })
 
-    // Delete item 1 
-    // Q - how to distinguish delete/X button of 'Item 1' has been clicked?
-    // await userEvent.click(
-    //   screen.getAllByRole('button', {name: 'X'})[0]
-    // );
-    // await wait(
-    //   () => expect(screen.getByText('Item 1')).not.toBeInTheDocument()
-    // );
+  it('allows deleting an item', async () => {
+    jest.spyOn(axios, 'jsonp');
+    axios.jsonp.mockResolvedValue([
+      {
+        id: 1,
+        title: 'Item 1',
+        completed: false
+      },
+      {
+        id: 2,
+        title: 'Item 2',
+        completed: true
+      }
+    ]);
+
+    render(
+      <StaticRouter>
+        <List />
+      </StaticRouter>
+    );
+
+    // Delete item 2
+    await userEvent.click(
+      screen.getByLabelText('Delete item 2')
+    );
+    await wait(
+      () => expect(screen.getByText('Item 2')).not.toBeInTheDocument()
+    );
   })
 })

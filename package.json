@@ -2,7 +2,7 @@
   "name": "work-orders-app",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {    
+  "dependencies": {
     "axios": "^0.19.2",
     "axios-jsonp-pro": "^1.1.8",
     "react": "^16.13.1",
@@ -33,6 +33,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -41,9 +44,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "react-scripts": "3.4.1"
   }
 }

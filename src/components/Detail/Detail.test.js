@@ -35,7 +35,7 @@ it("renders item data", async () => {
 
   // Use the asynchronous version of act to apply resolved promises
   await act(async () => {
-    render(<Detail id="223" />, container);
+    render(<Detail match={{ params: { id: "223" } }} />, container);
   });
 
   expect(container.querySelector("#id").textContent).toBe( 'ID: ' + fakeItem.id );

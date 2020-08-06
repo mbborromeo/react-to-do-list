@@ -241,7 +241,7 @@ function List() {
                       <button type="button" onClick={() => completeToDo(item.id)}>
                         { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
                       </button>
-                      <button type="button" onClick={() => deleteToDo(item.id)}>X</button>
+                      <button type="button" aria-label={`Delete item ${item.id}`} onClick={() => deleteToDo(item.id)}>X</button>
                     </td>
                   </tr>
                 ))
