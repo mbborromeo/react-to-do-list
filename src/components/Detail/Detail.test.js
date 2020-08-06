@@ -31,14 +31,20 @@ describe('Detail', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
 
     await wait(
+      // Error: Unable to find an element with the text: 223. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
       // () => expect(screen.getByText('223')).toBeInTheDocument()
 
+      // Error: Unable to find an element with the text: /223/. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+      () => expect(screen.getByText(/223/)).toBeInTheDocument()
+
       // Error: received value must be an HTMLElement or an SVGElement. Received has value: null
-      () => expect(screen.queryByText('223')).toBeInTheDocument()
-      
+      // () => expect(screen.queryByText('223')).toBeInTheDocument()
+
       // () => expect(screen.querySelector('#id').textContent).toBe( 'ID: 223' )
-      // () => expect(screen.findBy('#id').textContent).toBe( 'ID: 223' )
+
       // () => expect(screen.querySelector('#id')).toHaveTextContent(/223/)
+
+      // () => expect(screen.findBy('#id').textContent).toBe( 'ID: 223' )
     );
 
     // await wait(
