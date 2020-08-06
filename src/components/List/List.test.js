@@ -92,11 +92,9 @@ describe('List', () => {
     );
     
     await waitForElementToBeRemoved(
-      () => {
-        expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
+      () => expect(screen.getByText('Item 2')).not.toBeInTheDocument()
         // const item2title = screen.queryByText('Item 2')
         // expect(item2title).toBeNull() // it doesn't exist
-      }
     );
   })
 })
