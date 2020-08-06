@@ -54,7 +54,7 @@ describe('List', () => {
     );
   })
 
-  test('allows deleting an item', async () => {
+  it('allows deleting an item', async () => {
     jest.spyOn(axios, 'jsonp');
     axios.jsonp.mockResolvedValue([
       {
