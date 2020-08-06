@@ -79,11 +79,9 @@ describe('List', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
 
     // Wait for items to load and display
-    /*
     await wait(
       () => expect(screen.getByText('Item 2')).toBeInTheDocument()
     );
-    */
 
     // Delete item 2
     // wait - keeps trying to click an element with label until it succeeds (or timeout is reached)
@@ -94,10 +92,7 @@ describe('List', () => {
     );
     
     await waitForElementToBeRemoved(
-      () => {
-        expect(screen.getByText('Item 2')).toBeInTheDocument()
-        expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
-      }
+      () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
     );
   })
 })
