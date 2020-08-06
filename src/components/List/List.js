@@ -10,7 +10,6 @@ function List() {
   const [list, setList] = useState(undefined); // []
   const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'ascending' });
   const [hasError, setHasError] = useState(false);
-  console.log('list state', list);
 
   // save a memoized copy of the function for re-use instead of creating a new function each time
   const dataService = useMemo(
@@ -29,10 +28,7 @@ function List() {
   // Reference: https://www.digitalocean.com/community/tutorials/how-to-build-a-react-to-do-app-with-react-hooks
   const completeToDo = useCallback(
     (id) => {
-      console.log('completeToDo id', id);
       const indexOfItem = getArrayIndexOfItem(id);
-      console.log('completeToDo indexOfItem', indexOfItem);
-
       const copyOfList = [...list];
 
       if (!copyOfList[indexOfItem].completed) {
@@ -48,9 +44,7 @@ function List() {
 
   const deleteToDo = useCallback(
     (id) => {
-      console.log('deleteToDo id', id);
       const indexOfItem = getArrayIndexOfItem(id);
-      console.log('deleteToDo indexOfItem', indexOfItem);
 
       // const copyOfList = [...list];
       // copyOfList.splice(indexOfItem, 1);
@@ -113,8 +107,6 @@ function List() {
   );
 
   useEffect(() => {
-    console.log('List useEffect');
-
     dataService.getList()
       .then((response) => {
         // handle success
@@ -135,7 +127,6 @@ function List() {
   const sortedResults = useMemo(
     () => {
       if (list) {
-        console.log('sorting...');
         const sortedList = [...list];
 
         sortedList.sort((a, b) => {
@@ -169,9 +160,7 @@ function List() {
     },
     [list, sortConfig]
   );
-
-  console.log('sortedResults', sortedResults);
-
+  
   // possibly use useMemo here, and/or define a function for sort
   if (sortedResults) {
     if (sortedResults.length > 0) {
