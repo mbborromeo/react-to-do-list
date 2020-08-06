@@ -54,7 +54,7 @@ describe('List', () => {
     );
   })
 
-  it('allows deleting an item', async () => {
+  test('allows deleting an item', async () => {
     jest.spyOn(axios, 'jsonp');
     axios.jsonp.mockResolvedValue([
       {
@@ -92,7 +92,11 @@ describe('List', () => {
     );
     
     await waitForElementToBeRemoved(
-      () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
+      () => {
+        expect(screen.queryByText('Item 2')).not.toBeInTheDocument()
+        // const item2title = screen.queryByText('Item 2')
+        // expect(item2title).toBeNull() // it doesn't exist
+      }
     );
   })
 })
