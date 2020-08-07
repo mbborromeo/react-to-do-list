@@ -91,10 +91,7 @@ describe('List', () => {
       )
     );
     
-    // Error: TypeError: (0 , _react2.waitFor) is not a function
-    await waitFor(    
-      () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument() 
-    );
+    expect(screen.queryByText('Item 2')).not.toBeInTheDocument();
     /*
     await waitForElementToBeRemoved(    
       // Error: Unable to find an element with the text: Item 2. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
