@@ -91,7 +91,11 @@ describe('List', () => {
       )
     );
     
-    // await waitFor(
+    // Error: TypeError: (0 , _react2.waitFor) is not a function
+    await waitFor(    
+      () => expect(screen.queryByText('Item 2')).not.toBeInTheDocument() 
+    );
+    /*
     await waitForElementToBeRemoved(    
       // Error: Unable to find an element with the text: Item 2. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
       // () => expect(screen.getByText('Item 2')).not.toBeInTheDocument() 
@@ -99,9 +103,8 @@ describe('List', () => {
       // NOTE: use queryBy instead of getBy to return null instead of throwing in the query itself
 
       // TypeError: container.querySelectorAll is not a function
-      () => queryByText('Item 2')
+      // () => queryByText('Item 2')
       // () => queryByText(/item 2/i)
-
       // () => findByText('Item 2')
 
       // Error: The callback function which was passed did not return an element or non-empty array of elements. waitForElementToBeRemoved requires that the element(s) exist before waiting for removal.
@@ -128,6 +131,6 @@ describe('List', () => {
       //   expect(item2title).toBeNull() // it doesn't exist
       // }
     );
-    
+    */
   })
 })
