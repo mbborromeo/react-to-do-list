@@ -9,13 +9,13 @@ describe('Detail', () => {
   it('reads corresponding data for ID from URL', async () => {
     // Mock jsonp to return canned data
     jest.spyOn(axios, 'jsonp');
-    axios.jsonp.mockResolvedValue([
+    axios.jsonp.mockResolvedValue(
       {
         id: 223,
         title: 'Test Item',
         completed: false
       }
-    ]);
+    );
 
     // Use the asynchronous version of act to apply resolved promises
     // await act(async () => {

@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import DataService from '../../services/DataService';
 import '../../App.css';
 
-function Detail({ match }) {
-  const [detailID, setDetailID] = useState(undefined);
+function Detail({ match }) {  
   const [detail, setDetail] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const detailID = match.params.id;
 
   // save a memoized copy of the function for re-use instead of creating a new function each time
   const dataService = useMemo(
@@ -17,19 +17,12 @@ function Detail({ match }) {
     []
   );
 
-  // when you wrap a useCallback() hook around a function, the function inside it doesn't re-render
-  const getID = useCallback(
-    () => match.params.id,
-    [match.params.id] // dependencies that require a re-render for
-  );
-
   useEffect(() => {
-    setDetailID(getID());
-
     if (detailID) {
       dataService.getDetail(detailID)
         .then((response) => {
           // handle success
+          console.log('getDetail response', response)
           setDetail(response);
           setLoaded(true);
         })
@@ -43,7 +36,7 @@ function Detail({ match }) {
         });
     }
   },
-  [dataService, detailID, getID]);
+  [dataService, detailID]);
 
   if (loaded && Object.keys(detail).length > 0) {
     return (
