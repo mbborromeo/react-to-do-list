@@ -70,8 +70,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### TO DO
 
-- Unit Testing
-- improve code performance & reduce re-rendering
 - include Edit/update functionality
 - feedback message of when an item has been added
 - CSS style, so add field is pinned to top

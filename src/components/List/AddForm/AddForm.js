@@ -29,17 +29,14 @@ function AddForm({ addFunction }) {
   */
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
+        placeholder="Type item"
         value={newItem}
         onChange={(e) => setNewItem(e.target.value)}
       />
-      <input
-        type="submit"
-        value="Add"
-        onClick={handleSubmit}
-      />
+      <button type="submit">Add</button>
       <input
         type="button"
         value="Clear"
