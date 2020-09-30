@@ -35,7 +35,7 @@ table tbody tr td a:hover {
 
 table thead tr th {
     position: sticky;
-    top: 117px;
+    top: 115px;
     z-index: 10;
 
     background-color: #FFF;
