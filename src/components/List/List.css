@@ -42,10 +42,11 @@ table thead tr th {
     padding-bottom: 10px;
 }
 
-table thead tr th:first-child {
-    width: 53px;
+table thead tr th:first-child button {
+    min-width: 53px;
 }
 
+table thead tr th button,
 table thead tr td button {
     background-color: none;
     border: none;
@@ -71,6 +72,7 @@ thead button.descending::after {
 }
 
 thead button#completed {
+    min-width: 105px;
     text-align: left;
 }
 
