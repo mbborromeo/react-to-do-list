@@ -167,14 +167,15 @@ function List() {
       // render DOM
       return (
         <div>
-          <h1>TO DO</h1>
-
-          <AddForm addFunction={addToDo} />
+          <div id="header">
+            <h1>TO DO</h1>
+            <AddForm addFunction={addToDo} />
+          </div>
 
           <table>
             <thead>
               <tr>
-                <td>
+                <th>
                   <button
                     type="button"
                     className={sortConfig.key === 'id' ? sortConfig.direction : ''}
@@ -182,8 +183,8 @@ function List() {
                   >
                     ID
                   </button>
-                </td>
-                <td>
+                </th>
+                <th>
                   <button
                     type="button"
                     className={sortConfig.key === 'title' ? sortConfig.direction : ''}
@@ -191,8 +192,8 @@ function List() {
                   >
                     Title
                   </button>
-                </td>
-                <td>
+                </th>
+                <th>
                   <button
                     type="button"
                     id="completed"
@@ -201,7 +202,7 @@ function List() {
                   >
                     Completed
                   </button>
-                </td>
+                </th>
               </tr>
             </thead>
             <tbody>
