@@ -64,12 +64,10 @@ table thead tr td button:hover {
 
 thead button.ascending::after {
     content: '\2191';
-    margin-left: 1em;
 }
 
 thead button.descending::after {
     content: '\2193';
-    margin-left: 1em;
 }
 
 thead button#completed {
@@ -79,14 +77,24 @@ thead button#completed {
 
 thead button#completed.ascending::after {
     content: 'Y';
-    margin-left: 1em;
 }
 
 thead button#completed.descending::after {
     content: 'N';
-    margin-left: 1em;
+}
+
+thead button.ascending::after,
+thead button.descending::after,
+thead button#completed.ascending::after,
+thead button#completed.descending::after
+{
+    margin-left: 5px;
 }
 
 .completed {
+    text-decoration: line-through;
+}
+
+.strikethrough {
     text-decoration: line-through;
 }

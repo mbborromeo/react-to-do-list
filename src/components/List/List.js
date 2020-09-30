@@ -228,8 +228,11 @@ function List() {
                       </Link>
                     </td>
                     <td>
-                      <button type="button" onClick={() => completeToDo(item.id)}>
-                        { item.completed ? 'Mark as Incomplete' : 'Mark as Completed' }
+                      <button type="button" 
+                        onClick={() => completeToDo(item.id)}
+                        className={item.completed ? 'strikethrough' : ''}
+                      >
+                        {item.completed ? 'To Do' : 'Done'}
                       </button>
                       <button type="button" aria-label={`Delete item ${item.id}`} onClick={() => deleteToDo(item.id)}>X</button>
                     </td>
