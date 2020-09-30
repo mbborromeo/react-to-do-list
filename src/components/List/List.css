@@ -55,6 +55,7 @@ table thead tr td button {
     padding: 0.5em;
     margin-bottom: 1px;
     min-width: 60px;
+    width: 100%;
 }
 
 table thead tr td button:hover {
